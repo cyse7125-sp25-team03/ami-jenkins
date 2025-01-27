@@ -18,21 +18,3 @@ sudo apt-get install -y nginx
 
 # Install Certbot for Let's Encrypt
 sudo apt-get install -y certbot python3-certbot-nginx
-
-# Configure Nginx as reverse proxy
-sudo tee /etc/nginx/sites-available/jenkins <<EOF
-server {
-    listen 80;
-    server_name jenkins.sohanpatil.me;
-    
-    location / {
-        proxy_pass http://localhost:8080;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-    }
-}
-EOF
-
-sudo ln -s /etc/nginx/sites-available/jenkins /etc/nginx/sites-enabled/
-sudo nginx -t
-sudo systemctl reload nginx

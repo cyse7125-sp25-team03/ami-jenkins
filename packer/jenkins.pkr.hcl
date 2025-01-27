@@ -33,6 +33,7 @@ source "amazon-ebs" "ubuntu" {
   region        = var.aws_region
   source_ami    = var.aws_source_ami
   ssh_username  = var.ssh_username
+  ami_description = "AMI for setting up Jenkins"
 
   tags = {
     Name    = "Jenkins AMI"
