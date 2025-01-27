@@ -28,11 +28,11 @@ variable "ssh_username" {
 }
 
 source "amazon-ebs" "ubuntu" {
-  ami_name      = "${var.ami_name}-${formatdate("YYYY_MM_DD_HHmmss", timestamp())}"
-  instance_type = var.instance_type
-  region        = var.aws_region
-  source_ami    = var.aws_source_ami
-  ssh_username  = var.ssh_username
+  ami_name        = "${var.ami_name}-${formatdate("YYYY_MM_DD_HHmmss", timestamp())}"
+  instance_type   = var.instance_type
+  region          = var.aws_region
+  source_ami      = var.aws_source_ami
+  ssh_username    = var.ssh_username
   ami_description = "AMI for setting up Jenkins"
 
   tags = {
