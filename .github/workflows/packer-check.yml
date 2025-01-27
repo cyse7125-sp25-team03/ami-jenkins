@@ -6,6 +6,7 @@ on:
       - main
 
 jobs:
+  # Packer format and validation check
   packer_check:
     name: "Packer Format and Validation Check"
     runs-on: ubuntu-latest
