@@ -7,7 +7,7 @@ packer {
   }
 }
 
-variable "ami_id" {
+variable "ami_source_ami" {
   type = string
 }
 
@@ -19,7 +19,7 @@ variable "instance_type" {
   type = string
 }
 
-variable "region" {
+variable "aws_region" {
   type = string
 }
 
@@ -30,8 +30,8 @@ variable "ssh_username" {
 source "amazon-ebs" "ubuntu" {
   ami_name      = "${var.ami_name}-${formatdate("YYYY_MM_DD_HHmmss", timestamp())}"
   instance_type = var.instance_type
-  region        = var.region
-  source_ami    = var.ami_id
+  region        = var.aws_region
+  source_ami    = var.ami_source_ami
   ssh_username  = var.ssh_username
 
   tags = {
