@@ -8,23 +8,23 @@ packer {
 }
 
 variable "ami_id" {
-  type    = string
+  type = string
 }
 
 variable "ami_name" {
-  type    = string
+  type = string
 }
 
 variable "instance_type" {
-  type    = string
+  type = string
 }
 
 variable "region" {
-  type    = string
+  type = string
 }
 
 variable "ssh_username" {
-  type    = string
+  type = string
 }
 
 source "amazon-ebs" "ubuntu" {
