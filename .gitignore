@@ -16,6 +16,10 @@
 !/jobs
 !/.gitignore
 !/*.xml
+!/*.md
+!/*.github
+!/packer
+!/scripts
 
 # Ignore all files in jobs subdirectories except for folders.
 # Note: git doesn't track folders, only file content.

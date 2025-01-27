@@ -1,0 +1,46 @@
+name: Build Jenkins AMI
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  # Build custom AMI for Jenkins
+  build_ami:
+    name: "Build Jenkins AMI"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: "Configure AWS Credentials for GitHub Actions"
+        uses: aws-actions/configure-aws-credentials@v4.0.2
+        with:
+          aws-access-key-id: ${{ secrets.GHACTIONS_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.GHACTIONS_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Set up Packer
+        uses: hashicorp/setup-packer@v3
+
+      - name: Initialize Packer
+        run: packer init ./packer/jenkins.pkr.hcl
+
+      - name: Build Jenkins AMI
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_SOURCE_AMI: ${{ secrets.AWS_SOURCE_AMI }}
+          INSTANCE_TYPE: ${{ secrets.INSTANCE_TYPE }}
+          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+          AMI_NAME: ${{ secrets.AMI_NAME }}
+        run: |
+          packer build \
+          -var "aws_region=${AWS_REGION}" \
+          -var "aws_source_ami=${AWS_SOURCE_AMI}" \
+          -var "instance_type=${INSTANCE_TYPE}" \
+          -var "ssh_username=${SSH_USERNAME}" \
+          -var "ami_name=${AMI_NAME}" \
+          ./packer/jenkins.pkr.hcl
