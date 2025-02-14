@@ -6,6 +6,15 @@ import java.util.Properties
 // Get the Jenkins instance
 def instance = Jenkins.getInstance()
 
+// Create a marker file path
+def markerFile = new File(Jenkins.getInstance().getRootDir(), ".init-config-completed")
+
+// Check if script has already run
+if (markerFile.exists()) {
+    println "Initial configuration already completed. Skipping."
+    return
+}
+
 // Load environment variables from the properties file
 def props = new Properties()
 def envFile = new File('/etc/default/jenkins')
@@ -76,3 +85,8 @@ plugins.each { pluginName ->
 }
 
 instance.save()
+
+// Create the marker file to indicate this script has run
+markerFile.createNewFile()
+
+instance.safeRestart()
