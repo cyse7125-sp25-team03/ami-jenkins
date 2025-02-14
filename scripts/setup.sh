@@ -40,7 +40,6 @@ sudo cp -r /tmp/jenkins/groovy/base-setup-jenkins.groovy /var/lib/jenkins/staged
 sudo cp -r /tmp/jenkins/groovy/credentials.groovy /var/lib/jenkins/staged-init/credentials.groovy
 sudo cp -r /tmp/jenkins/groovy/tf-validate-seed-job.groovy /var/lib/jenkins/staged-init/tf-validate-seed-job.groovy
 sudo cp -r /tmp/jenkins/groovy/docker-publish-seed-job.groovy /var/lib/jenkins/staged-init/docker-publish-seed-job.groovy
-sudo cp -r /tmp/jenkins/groovy/restart-jenkins.groovy /var/lib/jenkins/staged-init/restart-jenkins.groovy
 sudo cp /tmp/jenkins/jcasc.yaml /var/lib/jenkins/jcasc.yaml
 
 # Create initialization script that will run on first boot
@@ -57,7 +56,6 @@ mv /var/lib/jenkins/staged-init/base-setup-jenkins.groovy /var/lib/jenkins/init.
 mv /var/lib/jenkins/staged-init/credentials.groovy /usr/local/credentials.groovy
 mv /var/lib/jenkins/staged-init/tf-validate-seed-job.groovy /usr/local/tf-validate-seed-job.groovy
 mv /var/lib/jenkins/staged-init/docker-publish-seed-job.groovy /usr/local/docker-publish-seed-job.groovy
-mv /var/lib/jenkins/staged-init/restart-jenkins.groovy /usr/local/restart-jenkins.groovy
 
 # Restart Jenkins to apply initialization scripts
 systemctl restart jenkins
