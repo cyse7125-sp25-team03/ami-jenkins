@@ -9,3 +9,4 @@ jobs:
   - file: "/usr/local/credentials.groovy"
   - file: "/usr/local/tf-validate-seed-job.groovy"
   - file: "/usr/local/docker-publish-seed-job.groovy"
+  - file: "/usr/local/restart-jenkins.groovy"
