@@ -1,7 +1,33 @@
 # Jenkins AMI Build and CI/CD with Packer and GitHub Actions
 
 ## Overview
-This project outlines the process for creating a custom Amazon Machine Image (AMI) for Jenkins using Packer. The AMI will include all necessary components for Jenkins, including plugins but excluding configuration. Additionally, the project implements a CI/CD pipeline using GitHub Actions to automate the AMI build and registration process upon repository updates.
+This project outlines the process for creating a custom Amazon Machine Image (AMI) for Jenkins using Packer. The AMI will include all necessary components for Jenkins, including plugins, credentials, seed jobs and configuration. Additionally, the project implements a CI/CD pipeline using GitHub Actions to automate the AMI build and registration process upon repository updates.
+
+## Project Structure
+```
+ami-jenkins/
+│-- jenkins/
+│   ├── groovy/
+│   ├── jcasc.yaml
+│-- packer/
+│   ├── packer.pkr.hcl
+│-- scripts/
+│   ├── setup.sh
+```
+
+### 1. `jenkins/groovy/`
+This directory contains Groovy scripts used for automating Jenkins job configurations and setup, credentials, and plugins.
+
+### 2. `jenkins/jcasc.yaml`
+This file contains Jenkins Configuration as Code (JCasC) settings for automated configuration management.
+
+### 3. `packer/`
+This directory contains the Packer configuration file used to build a Jenkins AMI.
+- **`packer.pkr.hcl`** - Packer template defining the base image, provisioners, and build configuration for the Jenkins AMI.
+
+### 4. `scripts/`
+This directory contains general setup and configuration scripts.
+- **`setup.sh`** - Script for setting up and configuring the Jenkins environment, installing dependencies, and additional configurations.
 
 ## Requirements
 
@@ -12,7 +38,7 @@ This project outlines the process for creating a custom Amazon Machine Image (AM
 4. **Default VPC**: The AMI build should utilize the default VPC in your AWS account.
 5. **Jenkins Setup**:
    - Install Jenkins.
-   - Install necessary plugins (excluding configuration).
+   - Install necessary plugins.
 6. **Reverse Proxy**:
    - Use Nginx as a reverse proxy for Jenkins.
 
@@ -27,7 +53,7 @@ This project outlines the process for creating a custom Amazon Machine Image (AM
 
 ## Outputs
 - A private AMI in the ROOT AWS account.
-- Jenkins is set up and ready for configuration after launching an EC2 instance.
+- Jenkins is fully set up and ready after launching an EC2 instance.
 
 ## References
 - [Packer Documentation](https://www.packer.io/docs)
