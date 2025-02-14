@@ -18,3 +18,112 @@ sudo apt-get install -y nginx
 
 # Install Certbot for Let's Encrypt
 sudo apt-get install -y certbot python3-certbot-nginx
+
+# Install Terraform
+wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install terraform
+
+# Create Jenkins init directory
+sudo mkdir -p /var/lib/jenkins/init.groovy.d/
+sudo chown -R jenkins:jenkins /var/lib/jenkins/init.groovy.d/
+
+# Stop Jenkins service before copying files
+sudo systemctl stop jenkins
+
+# Create a staging directory for initialization scripts
+sudo mkdir -p /var/lib/jenkins/staged-init/
+sudo chown -R jenkins:jenkins /var/lib/jenkins/staged-init/
+
+# Copy configuration files to staging
+sudo cp -r /tmp/jenkins/groovy/base-setup-jenkins.groovy /var/lib/jenkins/staged-init/base-setup-jenkins.groovy
+sudo cp -r /tmp/jenkins/groovy/credentials.groovy /var/lib/jenkins/staged-init/credentials.groovy
+sudo cp -r /tmp/jenkins/groovy/tf-validate-seed.groovy /var/lib/jenkins/staged-init/tf-validate-seed.groovy
+sudo cp -r /tmp/jenkins/groovy/docker-seed.groovy /var/lib/jenkins/staged-init/docker-seed.groovy
+sudo cp /tmp/jenkins/jcasc.yaml /var/lib/jenkins/jcasc.yaml
+
+# Create initialization script that will run on first boot
+sudo tee /var/lib/jenkins/init-on-boot.sh << 'EOF'
+#!/bin/bash
+
+# Wait for Jenkins to be fully operational
+while ! curl -s -I http://localhost:8080/login >/dev/null 2>&1; do
+    sleep 5
+done
+
+# Move initialization scripts from staging to init.groovy.d
+mv /var/lib/jenkins/staged-init/base-setup-jenkins.groovy /var/lib/jenkins/init.groovy.d/base-setup-jenkins.groovy
+mv /var/lib/jenkins/staged-init/credentials.groovy /usr/local/credentials.groovy
+mv /var/lib/jenkins/staged-init/tf-validate-seed.groovy /usr/local/tf-validate-seed.groovy
+mv /var/lib/jenkins/staged-init/docker-seed.groovy /usr/local/docker-seed.groovy
+
+# Restart Jenkins to apply initialization scripts
+systemctl restart jenkins
+EOF
+
+sudo chmod +x /var/lib/jenkins/init-on-boot.sh
+
+# Create systemd service to run initialization on boot
+sudo tee /etc/systemd/system/jenkins-init.service << EOF
+[Unit]
+Description=Jenkins First Boot Initialization
+After=jenkins.service
+ConditionPathExists=/var/lib/jenkins/staged-init
+
+[Service]
+Type=oneshot
+ExecStart=/var/lib/jenkins/init-on-boot.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Set environment variables for Jenkins configuration
+sudo tee /etc/default/jenkins << EOF
+JENKINS_HOME=/var/lib/jenkins
+JENKINS_ARGS="--httpPort=8080"
+CASC_JENKINS_CONFIG=/var/lib/jenkins/jcasc.yaml
+GITHUB_USERNAME=${GITHUB_USERNAME}
+GITHUB_TOKEN=${GITHUB_TOKEN}
+GITHUB_ID=${GITHUB_ID}
+GITHUB_DESCRIPTION=${GITHUB_DESCRIPTION}
+DOCKER_USERNAME=${DOCKER_USERNAME}
+DOCKER_TOKEN=${DOCKER_TOKEN}
+DOCKER_ID=${DOCKER_ID}
+DOCKER_DESCRIPTION=${DOCKER_DESCRIPTION}
+JENKINS_ADMIN_USERNAME=${JENKINS_ADMIN_USERNAME}
+JENKINS_ADMIN_PASSWORD=${JENKINS_ADMIN_PASSWORD}
+EOF
+
+# Modify the Jenkins systemd service to load environment variables
+sudo sed -i '/\[Service\]/a EnvironmentFile=-/etc/default/jenkins' /lib/systemd/system/jenkins.service
+sudo sed -i 's/\(JAVA_OPTS=-Djava\.awt\.headless=true\)/\1 -Djenkins.install.runSetupWizard=false/' /lib/systemd/system/jenkins.service
+sudo sed -i '/Environment="JAVA_OPTS=-Djava.awt.headless=true -Djenkins.install.runSetupWizard=false"/a Environment="CASC_JENKINS_CONFIG=/var/lib/jenkins/jcasc.yaml"' /lib/systemd/system/jenkins.service
+
+# Reload systemd and restart services
+sudo systemctl daemon-reload
+sudo systemctl enable jenkins-init.service
+sudo systemctl restart jenkins
+
+# Install docker
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl gnupg
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+sudo systemctl enable docker
+sudo systemctl start docker
+
+# add jenkins to docker users
+sudo usermod -aG docker jenkins
+sudo systemctl restart jenkins
