@@ -36,6 +36,15 @@ jobs:
           INSTANCE_TYPE: ${{ secrets.INSTANCE_TYPE }}
           SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
           AMI_NAME: ${{ secrets.AMI_NAME }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_ID: ${{ secrets.DOCKER_ID }}
+          DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
+          GH_USERNAME: ${{ secrets.GH_USERNAME }}
+          GH_ID: ${{ secrets.GH_ID }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          JENKINS_ADMIN_USERNAME: ${{ secrets.JENKINS_ADMIN_USERNAME }}
+          JENKINS_ADMIN_PASSWORD: ${{ secrets.JENKINS_ADMIN_PASSWORD }}
+
         run: |
           packer build \
           -var "aws_region=${AWS_REGION}" \
@@ -43,4 +52,12 @@ jobs:
           -var "instance_type=${INSTANCE_TYPE}" \
           -var "ssh_username=${SSH_USERNAME}" \
           -var "ami_name=${AMI_NAME}" \
+          -var "jenkins_admin_username=${JENKINS_ADMIN_USERNAME}" \
+          -var "jenkins_admin_password=${JENKINS_ADMIN_PASSWORD}" \
+          -var "github_username=${GH_USERNAME}" \
+          -var "github_id=${GH_ID}" \
+          -var "github_token=${GH_TOKEN}" \
+          -var "docker_username=${DOCKER_USERNAME}" \
+          -var "docker_id=${DOCKER_ID}" \
+          -var "docker_token=${DOCKER_TOKEN}" \
           ./packer/jenkins.pkr.hcl
