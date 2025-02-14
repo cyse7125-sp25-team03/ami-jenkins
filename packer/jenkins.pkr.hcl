@@ -8,7 +8,7 @@ packer {
 }
 
 variable "aws_source_ami" {
-  type    = string
+  type = string
 }
 
 variable "ami_name" {
@@ -32,7 +32,7 @@ variable "ssh_username" {
 }
 
 variable "jenkins_admin_username" {
-  type    = string
+  type = string
 }
 
 variable "jenkins_admin_password" {
@@ -41,7 +41,7 @@ variable "jenkins_admin_password" {
 }
 
 variable "github_username" {
-  type    = string
+  type = string
 }
 
 variable "github_token" {
@@ -50,16 +50,16 @@ variable "github_token" {
 }
 
 variable "github_id" {
-  type    = string
+  type = string
 }
 
 variable "github_description" {
-  type      = string
-  default   = "GitHub Personal Access Token"
+  type    = string
+  default = "GitHub Personal Access Token"
 }
 
 variable "docker_username" {
-  type    = string
+  type = string
 }
 
 variable "docker_token" {
@@ -68,12 +68,12 @@ variable "docker_token" {
 }
 
 variable "docker_id" {
-  type    = string
+  type = string
 }
 
 variable "docker_description" {
-  type      = string
-  default   = "Docker Personal Access Token"
+  type    = string
+  default = "Docker Personal Access Token"
 }
 
 source "amazon-ebs" "ubuntu" {
