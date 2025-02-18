@@ -61,18 +61,67 @@ def plugins = [
 def pluginManager = instance.getPluginManager()
 def updateCenter = instance.getUpdateCenter()
 
-println("Installing required plugins...")
-plugins.each { pluginName ->
-    println("Checking if plugin $pluginName is installed...")
-    if (!pluginManager.getPlugin(pluginName)) {
-        def plugin = updateCenter.getPlugin(pluginName)
+def uc = instance.updateCenter
+uc.updateAllSites() // Refresh update center metadata
+
+// Track if we need a restart
+def needsRestart = false
+
+plugins.each { pluginId ->
+    if (!instance.pluginManager.getPlugin(pluginId)) {
+        println "Installing ${pluginId}..."
+        def plugin = uc.getPlugin(pluginId)
         if (plugin) {
-            println("Deploying plugin $pluginName...")
-            plugin.deploy()
-        } else {
-            println("Plugin $pluginName not found.")
+            def installFuture = plugin.deploy()
+            while (!installFuture.isDone()) {
+                Thread.sleep(1000)
+            }
+            def result = installFuture.get()
+            println "${pluginId} install result: ${result}"
+            needsRestart = true
         }
     }
 }
 
 instance.save()
+
+// If plugins were installed, restart Jenkins
+if (needsRestart) {
+    println "Restarting Jenkins to complete plugin installation..."
+    instance.restart()
+} else {
+    // Only try to configure JCasC if no restart is needed
+    Thread.start {
+        println "Waiting for Jenkins to be fully initialized before applying JCasC..."
+        
+        // Wait for plugins to be loaded
+        while (Jenkins.get().pluginManager == null) {
+            sleep(5000)
+        }
+        
+        // Additional wait to ensure plugin is fully initialized
+        sleep(10000)
+
+        println "Jenkins is initialized. Loading JCasC..."
+
+        try {
+            def jenkinsInstance = Jenkins.get()
+            def cascPlugin = jenkinsInstance.pluginManager.getPlugin("configuration-as-code")
+
+            if (cascPlugin == null) {
+                println "ERROR: JCasC plugin not installed!"
+                return
+            }
+
+            // Load JCasC Configuration
+            def cascClass = Class.forName("io.jenkins.plugins.casc.ConfigurationAsCode", true, jenkinsInstance.pluginManager.uberClassLoader)
+            def cascInstance = cascClass.getMethod("get").invoke(null)
+            cascClass.getMethod("configure").invoke(cascInstance)
+
+            println "JCasC configuration applied successfully!"
+        } catch (Exception e) {
+            println "Error applying JCasC: ${e.message}"
+            e.printStackTrace()
+        }
+    }
+}
