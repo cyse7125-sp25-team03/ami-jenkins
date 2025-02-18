@@ -38,8 +38,20 @@ sudo chown -R jenkins:jenkins /var/lib/jenkins/staged-init/
 # Copy configuration files to staging
 sudo cp -r /tmp/jenkins/groovy/base-setup-jenkins.groovy /var/lib/jenkins/staged-init/base-setup-jenkins.groovy
 sudo cp -r /tmp/jenkins/groovy/credentials.groovy /var/lib/jenkins/staged-init/credentials.groovy
+
+# Seed job scripts
 sudo cp -r /tmp/jenkins/groovy/tf-validate-seed-job.groovy /var/lib/jenkins/staged-init/tf-validate-seed-job.groovy
 sudo cp -r /tmp/jenkins/groovy/docker-publish-seed-job.groovy /var/lib/jenkins/staged-init/docker-publish-seed-job.groovy
+
+# Commitlint seed job scripts
+sudo cp -r /tmp/jenkins/groovy/commitlint-infra-jenkins.groovy /var/lib/jenkins/staged-init/commitlint-infra-jenkins.groovy
+sudo cp -r /tmp/jenkins/groovy/commitlint-ami-jenkins.groovy /var/lib/jenkins/staged-init/commitlint-ami-jenkins.groovy
+sudo cp -r /tmp/jenkins/groovy/commitlint-tf-gcp-infra.groovy /var/lib/jenkins/staged-init/commitlint-tf-gcp-infra.groovy
+sudo cp -r /tmp/jenkins/groovy/commitlint-static-site.groovy /var/lib/jenkins/staged-init/commitlint-static-site.groovy
+sudo cp -r /tmp/jenkins/groovy/commitlint-webapp-hello-world.groovy /var/lib/jenkins/staged-init/commitlint-webapp-hello-world.groovy
+sudo cp -r /tmp/jenkins/groovy/commitlint-db-webapp.groovy /var/lib/jenkins/staged-init/commitlint-db-webapp.groovy
+
+# Copy Jenkins configuration as code (JCasC) file
 sudo cp /tmp/jenkins/jcasc.yaml /var/lib/jenkins/jcasc.yaml
 
 # Create initialization script that will run on first boot
@@ -54,8 +66,18 @@ done
 # Move initialization scripts from staging to init.groovy.d
 mv /var/lib/jenkins/staged-init/base-setup-jenkins.groovy /var/lib/jenkins/init.groovy.d/base-setup-jenkins.groovy
 mv /var/lib/jenkins/staged-init/credentials.groovy /usr/local/credentials.groovy
+
+# Seed job scripts
 mv /var/lib/jenkins/staged-init/tf-validate-seed-job.groovy /usr/local/tf-validate-seed-job.groovy
 mv /var/lib/jenkins/staged-init/docker-publish-seed-job.groovy /usr/local/docker-publish-seed-job.groovy
+
+# Commitlint seed job scripts
+mv /var/lib/jenkins/staged-init/commitlint-infra-jenkins.groovy /usr/local/commitlint-infra-jenkins.groovy
+mv /var/lib/jenkins/staged-init/commitlint-ami-jenkins.groovy /usr/local/commitlint-ami-jenkins.groovy
+mv /var/lib/jenkins/staged-init/commitlint-tf-gcp-infra.groovy /usr/local/commitlint-tf-gcp-infra.groovy
+mv /var/lib/jenkins/staged-init/commitlint-static-site.groovy /usr/local/commitlint-static-site.groovy
+mv /var/lib/jenkins/staged-init/commitlint-webapp-hello-world.groovy /usr/local/commitlint-webapp-hello-world.groovy
+mv /var/lib/jenkins/staged-init/commitlint-db-webapp.groovy /usr/local/commitlint-db-webapp.groovy
 
 # Restart Jenkins to apply initialization scripts
 systemctl restart jenkins
