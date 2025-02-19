@@ -1,11 +1,11 @@
-multibranchPipelineJob('docker-build-and-publish') {
+multibranchPipelineJob('static-site-build-and-publish') {
     description('Builds a Docker image and publishes it to DockerHub on every push to main')
 
     branchSources {
         branchSource {
             source {
                 github {
-                    id('docker-build-and-publish')
+                    id('static-site-build-and-publish')
                     credentialsId('github-pat')
                     configuredByUrl(true)
                     repoOwner('cyse7125-sp25-team03')
@@ -22,18 +22,18 @@ multibranchPipelineJob('docker-build-and-publish') {
             strategyId(1) // Only discover main branch
         }
 
-       // Add push trigger
-    it / triggers << 'com.cloudbees.hudson.plugins.folder.computed.PeriodicFolderTrigger' {
-            spec('H/5 * * * *')
-            interval('300000')
-        }   
+        // Add push trigger
+        it / triggers << 'com.cloudbees.hudson.plugins.folder.computed.PeriodicFolderTrigger' {
+                spec('H/5 * * * *')
+                interval('300000')
+            }   
 
-// Restrict builds to `main` branch only
-def buildStrategies = it / buildStrategies << 'jenkins.branch.buildstrategies.basic.BranchBuildStrategyImpl' {
-    allowedBranches {
-        string('main')
-    }
-}
+        // Restrict builds to `main` branch only
+        def buildStrategies = it / buildStrategies << 'jenkins.branch.buildstrategies.basic.BranchBuildStrategyImpl' {
+            allowedBranches {
+                string('main')
+            }
+        }
 
     }
 

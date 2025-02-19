@@ -41,7 +41,8 @@ sudo cp -r /tmp/jenkins/groovy/credentials.groovy /var/lib/jenkins/staged-init/c
 
 # Seed job scripts
 sudo cp -r /tmp/jenkins/groovy/tf-validate-seed-job.groovy /var/lib/jenkins/staged-init/tf-validate-seed-job.groovy
-sudo cp -r /tmp/jenkins/groovy/docker-publish-seed-job.groovy /var/lib/jenkins/staged-init/docker-publish-seed-job.groovy
+sudo cp -r /tmp/jenkins/groovy/static-site-publish-seed-job.groovy /var/lib/jenkins/staged-init/static-site-publish-seed-job.groovy
+sudo cp -r /tmp/jenkins/groovy/webapp-publish-seed-job.groovy /var/lib/jenkins/staged-init/webapp-publish-seed-job.groovy
 
 # Commitlint seed job scripts
 sudo cp -r /tmp/jenkins/groovy/commitlint-infra-jenkins.groovy /var/lib/jenkins/staged-init/commitlint-infra-jenkins.groovy
@@ -69,7 +70,8 @@ mv /var/lib/jenkins/staged-init/credentials.groovy /usr/local/credentials.groovy
 
 # Seed job scripts
 mv /var/lib/jenkins/staged-init/tf-validate-seed-job.groovy /usr/local/tf-validate-seed-job.groovy
-mv /var/lib/jenkins/staged-init/docker-publish-seed-job.groovy /usr/local/docker-publish-seed-job.groovy
+mv /var/lib/jenkins/staged-init/static-site-publish-seed-job.groovy /usr/local/static-site-publish-seed-job.groovy
+mv /var/lib/jenkins/staged-init/webapp-publish-seed-job.groovy /usr/local/webapp-publish-seed-job.groovy
 
 # Commitlint seed job scripts
 mv /var/lib/jenkins/staged-init/commitlint-infra-jenkins.groovy /usr/local/commitlint-infra-jenkins.groovy
