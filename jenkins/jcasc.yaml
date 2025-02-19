@@ -8,7 +8,8 @@ unclassified:
 jobs:
   - file: "/usr/local/credentials.groovy"
   - file: "/usr/local/tf-validate-seed-job.groovy"
-  - file: "/usr/local/docker-publish-seed-job.groovy"
+  - file: "/usr/local/static-site-publish-seed-job.groovy"
+  - file: "/usr/local/webapp-publish-seed-job.groovy"
   - file: "/usr/local/commitlint-infra-jenkins.groovy"
   - file: "/usr/local/commitlint-ami-jenkins.groovy"
   - file: "/usr/local/commitlint-tf-gcp-infra.groovy"
