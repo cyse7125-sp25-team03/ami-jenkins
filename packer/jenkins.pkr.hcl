@@ -13,7 +13,7 @@ variable "aws_source_ami" {
 
 variable "ami_name" {
   type    = string
-  default = "jenkins-ami"
+  default =    "jenkins-ami"
 }
 
 variable "instance_type" {
