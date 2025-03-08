@@ -55,7 +55,8 @@ def plugins = [
     "pipeline-model-definition",
     "pipeline-stage-view",
     "pipeline-utility-steps",
-    "ws-cleanup"
+    "ws-cleanup",
+    "github-checks"
 ]
 
 def pluginManager = instance.getPluginManager()
