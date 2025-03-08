@@ -45,6 +45,7 @@ sudo cp -r /tmp/jenkins/groovy/static-site-publish-seed-job.groovy /var/lib/jenk
 sudo cp -r /tmp/jenkins/groovy/webapp-publish-seed-job.groovy /var/lib/jenkins/staged-init/webapp-publish-seed-job.groovy
 sudo cp -r /tmp/jenkins/groovy/db-webapp-publish-seed-job.groovy /var/lib/jenkins/staged-init/db-webapp-publish-seed-job.groovy
 sudo cp -r /tmp/jenkins/groovy/api-server-seed-job.groovy /var/lib/jenkins/staged-init/api-server-seed-job.groovy
+sudo cp -r /tmp/jenkins/groovy/api-server-prcheck-seed-job.groovy /var/lib/jenkins/staged-init/api-server-prcheck-seed-job.groovy
 
 # Commitlint seed job scripts
 sudo cp -r /tmp/jenkins/groovy/commitlint-infra-jenkins.groovy /var/lib/jenkins/staged-init/commitlint-infra-jenkins.groovy
@@ -77,6 +78,7 @@ mv /var/lib/jenkins/staged-init/static-site-publish-seed-job.groovy /usr/local/s
 mv /var/lib/jenkins/staged-init/webapp-publish-seed-job.groovy /usr/local/webapp-publish-seed-job.groovy
 mv /var/lib/jenkins/staged-init/db-webapp-publish-seed-job.groovy /usr/local/db-webapp-publish-seed-job.groovy
 mv /var/lib/jenkins/staged-init/api-server-seed-job.groovy /usr/local/api-server-seed-job.groovy
+mv /var/lib/jenkins/staged-init/api-server-prcheck-seed-job.groovy /usr/local/api-server-prcheck-seed-job.groovy
 
 # Commitlint seed job scripts
 mv /var/lib/jenkins/staged-init/commitlint-infra-jenkins.groovy /usr/local/commitlint-infra-jenkins.groovy
