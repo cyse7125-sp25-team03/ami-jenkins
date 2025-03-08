@@ -18,9 +18,6 @@ multibranchPipelineJob('api-server-pr-checks') {
     
     configure {
         def traits = it / sources / data / 'jenkins.branch.BranchSource' / source / traits
-        traits << 'org.jenkinsci.plugins.github__branch__source.BranchDiscoveryTrait' {
-            strategyId(1)
-        }
         traits << 'org.jenkinsci.plugins.github__branch__source.OriginPullRequestDiscoveryTrait' {
             strategyId(1)
         }
