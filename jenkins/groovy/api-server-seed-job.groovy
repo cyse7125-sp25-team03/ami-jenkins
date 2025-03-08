@@ -46,7 +46,6 @@ multibranchPipelineJob('api-server-validate-and-build') {
             }
         }
         // Enable build strategies for PRs
-        def buildStrategiesNode = it / buildStrategies
         buildStrategiesNode << 'jenkins.branch.buildstrategies.basic.ChangeRequestBuildStrategy' {
             ignoreTargetOnlyChanges(true)
             ignoreUntrustedChanges(false)
