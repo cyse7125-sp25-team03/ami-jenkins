@@ -76,6 +76,7 @@ mv /var/lib/jenkins/staged-init/tf-validate-seed-job.groovy /usr/local/tf-valida
 mv /var/lib/jenkins/staged-init/static-site-publish-seed-job.groovy /usr/local/static-site-publish-seed-job.groovy
 mv /var/lib/jenkins/staged-init/webapp-publish-seed-job.groovy /usr/local/webapp-publish-seed-job.groovy
 mv /var/lib/jenkins/staged-init/db-webapp-publish-seed-job.groovy /usr/local/db-webapp-publish-seed-job.groovy
+mv /var/lib/jenkins/staged-init/api-server-seed-job.groovy /usr/local/api-server-seed-job.groovy
 
 # Commitlint seed job scripts
 mv /var/lib/jenkins/staged-init/commitlint-infra-jenkins.groovy /usr/local/commitlint-infra-jenkins.groovy
@@ -84,6 +85,7 @@ mv /var/lib/jenkins/staged-init/commitlint-tf-gcp-infra.groovy /usr/local/commit
 mv /var/lib/jenkins/staged-init/commitlint-static-site.groovy /usr/local/commitlint-static-site.groovy
 mv /var/lib/jenkins/staged-init/commitlint-webapp-hello-world.groovy /usr/local/commitlint-webapp-hello-world.groovy
 mv /var/lib/jenkins/staged-init/commitlint-db-webapp.groovy /usr/local/commitlint-db-webapp.groovy
+mv /var/lib/jenkins/staged-init/commitlint-api-server.groovy /usr/local/commitlint-api-server.groovy
 
 # Restart Jenkins to apply initialization scripts
 systemctl restart jenkins
