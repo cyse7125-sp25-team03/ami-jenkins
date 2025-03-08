@@ -12,6 +12,7 @@ jobs:
   - file: "/usr/local/webapp-publish-seed-job.groovy"
   - file: "/usr/local/db-webapp-publish-seed-job.groovy"
   - file: "/usr/local/api-server-seed-job.groovy"
+  - file: "/usr/local/api-server-prcheck-seed-job.groovy"
   - file: "/usr/local/commitlint-infra-jenkins.groovy"
   - file: "/usr/local/commitlint-ami-jenkins.groovy"
   - file: "/usr/local/commitlint-tf-gcp-infra.groovy"
