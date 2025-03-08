@@ -44,6 +44,7 @@ sudo cp -r /tmp/jenkins/groovy/tf-validate-seed-job.groovy /var/lib/jenkins/stag
 sudo cp -r /tmp/jenkins/groovy/static-site-publish-seed-job.groovy /var/lib/jenkins/staged-init/static-site-publish-seed-job.groovy
 sudo cp -r /tmp/jenkins/groovy/webapp-publish-seed-job.groovy /var/lib/jenkins/staged-init/webapp-publish-seed-job.groovy
 sudo cp -r /tmp/jenkins/groovy/db-webapp-publish-seed-job.groovy /var/lib/jenkins/staged-init/db-webapp-publish-seed-job.groovy
+sudo cp -r /tmp/jenkins/groovy/api-server-seed-job.groovy /var/lib/jenkins/staged-init/api-server-seed-job.groovy
 
 # Commitlint seed job scripts
 sudo cp -r /tmp/jenkins/groovy/commitlint-infra-jenkins.groovy /var/lib/jenkins/staged-init/commitlint-infra-jenkins.groovy
@@ -52,6 +53,7 @@ sudo cp -r /tmp/jenkins/groovy/commitlint-tf-gcp-infra.groovy /var/lib/jenkins/s
 sudo cp -r /tmp/jenkins/groovy/commitlint-static-site.groovy /var/lib/jenkins/staged-init/commitlint-static-site.groovy
 sudo cp -r /tmp/jenkins/groovy/commitlint-webapp-hello-world.groovy /var/lib/jenkins/staged-init/commitlint-webapp-hello-world.groovy
 sudo cp -r /tmp/jenkins/groovy/commitlint-db-webapp.groovy /var/lib/jenkins/staged-init/commitlint-db-webapp.groovy
+sudo cp -r /tmp/jenkins/groovy/commitlint-api-server-seed-job.groovy /var/lib/jenkins/staged-init/commitlint-api-server-seed-job.groovy
 
 # Copy Jenkins configuration as code (JCasC) file
 sudo cp /tmp/jenkins/jcasc.yaml /var/lib/jenkins/jcasc.yaml
