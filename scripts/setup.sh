@@ -53,7 +53,7 @@ sudo cp -r /tmp/jenkins/groovy/commitlint-tf-gcp-infra.groovy /var/lib/jenkins/s
 sudo cp -r /tmp/jenkins/groovy/commitlint-static-site.groovy /var/lib/jenkins/staged-init/commitlint-static-site.groovy
 sudo cp -r /tmp/jenkins/groovy/commitlint-webapp-hello-world.groovy /var/lib/jenkins/staged-init/commitlint-webapp-hello-world.groovy
 sudo cp -r /tmp/jenkins/groovy/commitlint-db-webapp.groovy /var/lib/jenkins/staged-init/commitlint-db-webapp.groovy
-sudo cp -r /tmp/jenkins/groovy/commitlint-api-server-seed-job.groovy /var/lib/jenkins/staged-init/commitlint-api-server-seed-job.groovy
+sudo cp -r /tmp/jenkins/groovy/commitlint-api-server.groovy /var/lib/jenkins/staged-init/commitlint-api-server.groovy
 
 # Copy Jenkins configuration as code (JCasC) file
 sudo cp /tmp/jenkins/jcasc.yaml /var/lib/jenkins/jcasc.yaml
