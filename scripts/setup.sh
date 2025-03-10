@@ -24,6 +24,11 @@ curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh
 sudo -E bash nodesource_setup.sh
 sudo apt-get install -y nodejs
 
+# Install helm
+wget https://get.helm.sh/helm-v3.17.1-linux-amd64.tar.gz \
+    && tar -zxvf helm-v3.17.1-linux-amd64.tar.gz
+sudo mv linux-amd64/helm /usr/local/bin/helm
+
 # Install semantic-release plugins
 sudo npm install -g semantic-release @semantic-release/commit-analyzer @semantic-release/release-notes-generator @semantic-release/changelog @semantic-release/github @semantic-release/git
 sudo npm install semantic-release-helm
