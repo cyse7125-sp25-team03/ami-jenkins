@@ -62,13 +62,7 @@ sudo cp -r /tmp/jenkins/groovy/api-server-seed-job.groovy /var/lib/jenkins/stage
 sudo cp -r /tmp/jenkins/groovy/api-server-prcheck-seed-job.groovy /var/lib/jenkins/staged-init/api-server-prcheck-seed-job.groovy
 
 # Commitlint seed job scripts
-sudo cp -r /tmp/jenkins/groovy/commitlint-infra-jenkins.groovy /var/lib/jenkins/staged-init/commitlint-infra-jenkins.groovy
-sudo cp -r /tmp/jenkins/groovy/commitlint-ami-jenkins.groovy /var/lib/jenkins/staged-init/commitlint-ami-jenkins.groovy
-sudo cp -r /tmp/jenkins/groovy/commitlint-tf-gcp-infra.groovy /var/lib/jenkins/staged-init/commitlint-tf-gcp-infra.groovy
-sudo cp -r /tmp/jenkins/groovy/commitlint-static-site.groovy /var/lib/jenkins/staged-init/commitlint-static-site.groovy
-sudo cp -r /tmp/jenkins/groovy/commitlint-webapp-hello-world.groovy /var/lib/jenkins/staged-init/commitlint-webapp-hello-world.groovy
-sudo cp -r /tmp/jenkins/groovy/commitlint-db-webapp.groovy /var/lib/jenkins/staged-init/commitlint-db-webapp.groovy
-sudo cp -r /tmp/jenkins/groovy/commitlint-api-server.groovy /var/lib/jenkins/staged-init/commitlint-api-server.groovy
+sudo find /tmp/jenkins/groovy/ -name "commitlint-*.groovy" -exec sudo cp {} /var/lib/jenkins/staged-init/ \;
 
 # Copy Jenkins configuration as code (JCasC) file
 sudo cp /tmp/jenkins/jcasc.yaml /var/lib/jenkins/jcasc.yaml
@@ -95,13 +89,7 @@ mv /var/lib/jenkins/staged-init/api-server-seed-job.groovy /usr/local/api-server
 mv /var/lib/jenkins/staged-init/api-server-prcheck-seed-job.groovy /usr/local/api-server-prcheck-seed-job.groovy
 
 # Commitlint seed job scripts
-mv /var/lib/jenkins/staged-init/commitlint-infra-jenkins.groovy /usr/local/commitlint-infra-jenkins.groovy
-mv /var/lib/jenkins/staged-init/commitlint-ami-jenkins.groovy /usr/local/commitlint-ami-jenkins.groovy
-mv /var/lib/jenkins/staged-init/commitlint-tf-gcp-infra.groovy /usr/local/commitlint-tf-gcp-infra.groovy
-mv /var/lib/jenkins/staged-init/commitlint-static-site.groovy /usr/local/commitlint-static-site.groovy
-mv /var/lib/jenkins/staged-init/commitlint-webapp-hello-world.groovy /usr/local/commitlint-webapp-hello-world.groovy
-mv /var/lib/jenkins/staged-init/commitlint-db-webapp.groovy /usr/local/commitlint-db-webapp.groovy
-mv /var/lib/jenkins/staged-init/commitlint-api-server.groovy /usr/local/commitlint-api-server.groovy
+find /var/lib/jenkins/staged-init/ -name "commitlint-*.groovy" -exec mv {} /usr/local/ \;
 
 # Restart Jenkins to apply initialization scripts
 systemctl restart jenkins
