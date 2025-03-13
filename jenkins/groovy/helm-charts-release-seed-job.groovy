@@ -1,16 +1,16 @@
-multibranchPipelineJob('db-migration-build-and-publish') {
-    description('Builds a Docker image and publishes it to DockerHub on every push to main')
+multibranchPipelineJob('helm-charts-release') {
+    description('Builds a Helm package and releases on GitHub on every push to main')
 
     branchSources {
         branchSource {
             source {
                 github {
-                    id('db-migration-build-and-publish')
+                    id('helm-charts-release')
                     credentialsId('github-pat')
                     configuredByUrl(true)
                     repoOwner('cyse7125-sp25-team03')
-                    repository('db-webapp')
-                    repositoryUrl('https://github.com/cyse7125-sp25-team03/db-webapp.git')
+                    repository('helm-charts')
+                    repositoryUrl('https://github.com/cyse7125-sp25-team03/helm-charts.git')
                 }
             }
         }
