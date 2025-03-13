@@ -62,6 +62,8 @@ sudo cp -r /tmp/jenkins/groovy/api-server-seed-job.groovy /var/lib/jenkins/stage
 sudo cp -r /tmp/jenkins/groovy/api-server-prcheck-seed-job.groovy /var/lib/jenkins/staged-init/api-server-prcheck-seed-job.groovy
 sudo cp -r /tmp/jenkins/groovy/db-trace-processor-prcheck-seed-job.groovy /var/lib/jenkins/staged-init/db-trace-processor-prcheck-seed-job.groovy
 sudo cp -r /tmp/jenkins/groovy/db-trace-processor-publish-seed-job.groovy /var/lib/jenkins/staged-init/db-trace-processor-publish-seed-job.groovy
+sudo cp -r /tmp/jenkins/groovy/helm-charts-prcheck-seed-job.groovy /var/lib/jenkins/staged-init/helm-charts-prcheck-seed-job.groovy
+sudo cp -r /tmp/jenkins/groovy/helm-charts-release-seed-job.groovy /var/lib/jenkins/staged-init/helm-charts-release-seed-job.groovy
 
 # Commitlint seed job scripts
 sudo find /tmp/jenkins/groovy/ -name "commitlint-*.groovy" -exec sudo cp {} /var/lib/jenkins/staged-init/ \;
@@ -91,6 +93,8 @@ mv /var/lib/jenkins/staged-init/api-server-seed-job.groovy /usr/local/api-server
 mv /var/lib/jenkins/staged-init/api-server-prcheck-seed-job.groovy /usr/local/api-server-prcheck-seed-job.groovy
 mv /var/lib/jenkins/staged-init/db-trace-processor-prcheck-seed-job.groovy /usr/local/db-trace-processor-prcheck-seed-job.groovy
 mv /var/lib/jenkins/staged-init/db-trace-processor-publish-seed-job.groovy /usr/local/db-trace-processor-publish-seed-job.groovy
+mv /var/lib/jenkins/staged-init/helm-charts-prcheck-seed-job.groovy /usr/local/helm-charts-prcheck-seed-job.groovy
+mv /var/lib/jenkins/staged-init/helm-charts-release-seed-job.groovy /usr/local/helm-charts-release-seed-job.groovy
 
 # Commitlint seed job scripts
 find /var/lib/jenkins/staged-init/ -name "commitlint-*.groovy" -exec mv {} /usr/local/ \;
