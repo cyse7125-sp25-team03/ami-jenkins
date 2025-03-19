@@ -53,20 +53,11 @@ sudo chown -R jenkins:jenkins /var/lib/jenkins/staged-init/
 sudo cp -r /tmp/jenkins/groovy/base-setup-jenkins.groovy /var/lib/jenkins/staged-init/base-setup-jenkins.groovy
 sudo cp -r /tmp/jenkins/groovy/credentials.groovy /var/lib/jenkins/staged-init/credentials.groovy
 
-# Seed job scripts
-sudo cp -r /tmp/jenkins/groovy/tf-validate-seed-job.groovy /var/lib/jenkins/staged-init/tf-validate-seed-job.groovy
-sudo cp -r /tmp/jenkins/groovy/static-site-publish-seed-job.groovy /var/lib/jenkins/staged-init/static-site-publish-seed-job.groovy
-sudo cp -r /tmp/jenkins/groovy/webapp-publish-seed-job.groovy /var/lib/jenkins/staged-init/webapp-publish-seed-job.groovy
-sudo cp -r /tmp/jenkins/groovy/db-webapp-publish-seed-job.groovy /var/lib/jenkins/staged-init/db-webapp-publish-seed-job.groovy
-sudo cp -r /tmp/jenkins/groovy/api-server-seed-job.groovy /var/lib/jenkins/staged-init/api-server-seed-job.groovy
-sudo cp -r /tmp/jenkins/groovy/api-server-prcheck-seed-job.groovy /var/lib/jenkins/staged-init/api-server-prcheck-seed-job.groovy
-sudo cp -r /tmp/jenkins/groovy/db-trace-processor-prcheck-seed-job.groovy /var/lib/jenkins/staged-init/db-trace-processor-prcheck-seed-job.groovy
-sudo cp -r /tmp/jenkins/groovy/db-trace-processor-publish-seed-job.groovy /var/lib/jenkins/staged-init/db-trace-processor-publish-seed-job.groovy
-sudo cp -r /tmp/jenkins/groovy/helm-charts-prcheck-seed-job.groovy /var/lib/jenkins/staged-init/helm-charts-prcheck-seed-job.groovy
-sudo cp -r /tmp/jenkins/groovy/helm-charts-release-seed-job.groovy /var/lib/jenkins/staged-init/helm-charts-release-seed-job.groovy
 
-# Commitlint seed job scripts
+# Commitlint, Check, Release seed job scripts
 sudo find /tmp/jenkins/groovy/ -name "commitlint-*.groovy" -exec sudo cp {} /var/lib/jenkins/staged-init/ \;
+sudo find /tmp/jenkins/groovy/ -name "check-*.groovy" -exec sudo cp {} /var/lib/jenkins/staged-init/ \;
+sudo find /tmp/jenkins/groovy/ -name "release-*.groovy" -exec sudo cp {} /var/lib/jenkins/staged-init/ \;
 
 # Copy Jenkins configuration as code (JCasC) file
 sudo cp /tmp/jenkins/jcasc.yaml /var/lib/jenkins/jcasc.yaml
@@ -84,20 +75,12 @@ done
 mv /var/lib/jenkins/staged-init/base-setup-jenkins.groovy /var/lib/jenkins/init.groovy.d/base-setup-jenkins.groovy
 mv /var/lib/jenkins/staged-init/credentials.groovy /usr/local/credentials.groovy
 
-# Seed job scripts
-mv /var/lib/jenkins/staged-init/tf-validate-seed-job.groovy /usr/local/tf-validate-seed-job.groovy
-mv /var/lib/jenkins/staged-init/static-site-publish-seed-job.groovy /usr/local/static-site-publish-seed-job.groovy
-mv /var/lib/jenkins/staged-init/webapp-publish-seed-job.groovy /usr/local/webapp-publish-seed-job.groovy
-mv /var/lib/jenkins/staged-init/db-webapp-publish-seed-job.groovy /usr/local/db-webapp-publish-seed-job.groovy
-mv /var/lib/jenkins/staged-init/api-server-seed-job.groovy /usr/local/api-server-seed-job.groovy
-mv /var/lib/jenkins/staged-init/api-server-prcheck-seed-job.groovy /usr/local/api-server-prcheck-seed-job.groovy
-mv /var/lib/jenkins/staged-init/db-trace-processor-prcheck-seed-job.groovy /usr/local/db-trace-processor-prcheck-seed-job.groovy
-mv /var/lib/jenkins/staged-init/db-trace-processor-publish-seed-job.groovy /usr/local/db-trace-processor-publish-seed-job.groovy
-mv /var/lib/jenkins/staged-init/helm-charts-prcheck-seed-job.groovy /usr/local/helm-charts-prcheck-seed-job.groovy
-mv /var/lib/jenkins/staged-init/helm-charts-release-seed-job.groovy /usr/local/helm-charts-release-seed-job.groovy
-
-# Commitlint seed job scripts
+# Commitlint, Check, Release seed job scripts
 find /var/lib/jenkins/staged-init/ -name "commitlint-*.groovy" -exec mv {} /usr/local/ \;
+# Commitlint seed job scripts
+find /var/lib/jenkins/staged-init/ -name "check-*.groovy" -exec mv {} /usr/local/ \;
+find /var/lib/jenkins/staged-init/ -name "release-*.groovy" -exec mv {} /usr/local/ \;
+
 
 # Restart Jenkins to apply initialization scripts
 systemctl restart jenkins
