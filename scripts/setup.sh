@@ -77,7 +77,6 @@ mv /var/lib/jenkins/staged-init/credentials.groovy /usr/local/credentials.groovy
 
 # Commitlint, Check, Release seed job scripts
 find /var/lib/jenkins/staged-init/ -name "commitlint-*.groovy" -exec mv {} /usr/local/ \;
-# Commitlint seed job scripts
 find /var/lib/jenkins/staged-init/ -name "check-*.groovy" -exec mv {} /usr/local/ \;
 find /var/lib/jenkins/staged-init/ -name "release-*.groovy" -exec mv {} /usr/local/ \;
 
